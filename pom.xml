@@ -7,6 +7,9 @@
         <module>cloud-commons</module>
         <module>cloud-dispatch</module>
         <module>cloud-site</module>
+        <module>cloud-user</module>
+        <module>cloud-ticket</module>
+        <module>cloud-video</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
