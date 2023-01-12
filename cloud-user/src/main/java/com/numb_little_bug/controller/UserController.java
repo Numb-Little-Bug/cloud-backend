@@ -20,20 +20,21 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
+
     @GetMapping(value="/user/{id}")
     public User getUserById(@PathVariable("id") Long id) {
         return userMapper.queryUserById(id);
     }
 
-    @GetMapping(value="/user/{username}")
-    public User getUserByUsername(@PathVariable("username") String username) {
-        return userMapper.queryUserByUsername(username);
-    }
-
-    @GetMapping(value="/user/{tel}")
-    public User getUserByTel(@PathVariable("tel") String tel) {
-        return userMapper.queryUserByTel(tel);
-    }
+//    @GetMapping(value="/user/{username}")
+//    public User getUserByUsername(@PathVariable("username") String username) {
+//        return userMapper.queryUserByUsername(username);
+//    }
+//
+//    @GetMapping(value="/user/{tel}")
+//    public User getUserByTel(@PathVariable("tel") String tel) {
+//        return userMapper.queryUserByTel(tel);
+//    }
 
     //接受前端用户注册表单
     @PostMapping(value="/user/register")

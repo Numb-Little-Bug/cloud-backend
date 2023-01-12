@@ -17,14 +17,14 @@ public interface UserMapper {
     User queryUserById(Long id);
 
     //根据用户名查询用户
-    @Select("select * from user where username = #{username}")
-    User queryUserByUsername(String username);
+    @Select("select * from user where name = #{name}")
+    User queryUserByName(String name);
 
     //根据手机号查询用户
     @Select("select * from user where phone = #{tel}")
     User queryUserByTel(String tel);
 
     //添加用户
-    @Select("insert into user (username, password, phone, email, id_card_number) values (#{username}, #{password}, #{phone}, #{email}, #{id_card_number})")
+    @Select("insert into user (name, password, phone, email, id_card_number) values (#{name}, #{password}, #{phone}, #{email}, #{id_card_number})")
     void addUser(User user);
 }
