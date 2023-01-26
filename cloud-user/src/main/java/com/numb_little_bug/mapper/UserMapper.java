@@ -25,6 +25,6 @@ public interface UserMapper {
     User queryUserByTel(String tel);
 
     //添加用户
-    @Select("insert into user (name, password, phone, email, id_card_number) values (#{name}, #{password}, #{phone}, #{email}, #{id_card_number})")
+    @Select("insert into user (id, name, password, tel) values (#{id}, #{name}, #{password}, #{tel})")
     void addUser(User user);
 }
