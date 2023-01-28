@@ -28,7 +28,7 @@ public class User {
     @Length(min = 6, max = 16, message = "密码长度必须在6-16位之间")
     private String password;
 
-    @Pattern(regexp = "^1[3|4|5|7|8][0-9]\\d{8}$", message = "手机号格式不正确")
+    @Pattern(regexp = "^1[3|4|5|7|8|9][0-9]\\d{8}$", message = "手机号格式不正确")
     private String tel;
 
     private IDCard id_card;
