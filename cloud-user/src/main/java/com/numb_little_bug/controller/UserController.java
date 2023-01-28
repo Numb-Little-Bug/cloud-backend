@@ -6,6 +6,8 @@ import com.numb_little_bug.mapper.UserMapper;
 import com.numb_little_bug.mapper.IDCardMapper;
 import com.numb_little_bug.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -30,6 +32,29 @@ public class UserController {
     @GetMapping(value="/user/{id}")
     public User getUserById(@PathVariable("id") Long id) {
         return userMapper.queryUserById(id);
+    }
+
+    @PostMapping(value="/user/{tel}")
+    public JsonResult login(@PathVariable("tel") String tel, @RequestBody User userParam) {
+        System.out.println("===================================");
+        System.out.println("password: " + userParam.getPassword());
+        System.out.println("===================================");
+        User user = userMapper.queryUserByTel(tel);
+        if (user == null) {
+            return new JsonResult(400, null, "用户不存在", "failed");
+        }
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if (user.getPassword().equals(userParam.getPassword())) {
+            // 根据手机号加密生成jwt
+            String jwt = bCryptPasswordEncoder.encode(tel);
+            Map<String, String> map = new HashMap<>();
+            map.put("jwt", jwt);
+            map.put("user", user.toString());
+            return new JsonResult(200, map, "登录成功", "success");
+        } else {
+            return new JsonResult(400, null, "密码错误", "failed");
+        }
+
     }
 
     // 接受前端用户注册表单
