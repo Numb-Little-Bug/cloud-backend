@@ -12,7 +12,8 @@ import lombok.Setter;
 public class JsonResult {
     private Integer code;
 
-    private String msg;
+    private Object result;
+    private String message;
 
-    private Object obj;
+    private String type;
 }

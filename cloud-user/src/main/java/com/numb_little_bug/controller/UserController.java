@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.*;
 
 @RestController
 public class UserController {
@@ -34,32 +34,43 @@ public class UserController {
 
     // 接受前端用户注册表单
     @PostMapping(value="/user")
-    public JsonResult register(@Valid User user, BindingResult bindingResult){
+    public JsonResult register(@Valid @RequestBody User user, BindingResult bindingResult){
         // 判断数据格式是否有错误
         if (bindingResult.hasErrors()) {
-            return new JsonResult(401, bindingResult.getFieldError().getDefaultMessage(), null);
+            return new JsonResult(400, null, bindingResult.getFieldError().getDefaultMessage().toString(), "failed");
         }
 
         // 判断用户是否已经注册
         User existingUser = userMapper.queryUserByTel(user.getTel());
         if (existingUser != null) {
-            return new JsonResult(402, "该手机号已经被注册", null);
+            return new JsonResult(400,null, "该手机号已经被注册", "failed");
         }
-
-        user.setCreated_time(new java.util.Date());
+        Calendar calendar = Calendar.getInstance(Locale.CHINA);
+        //java mysql 时区问题，北京时间比mysql时间少8小时，所以我们加上14小时
+        //calendar.add(Calendar.HOUR, 14);
+        Date time = calendar.getTime();
+        user.setCreated_time(time);
         try{
             userMapper.addUser(user);
         } catch (Exception e){
             // 返回json格式包含状态码的错误信息
             JsonResult jr = new JsonResult();
             jr.setCode(410);
-            jr.setMsg("注册失败, "+e.getMessage());
+            jr.setMessage("注册失败, "+e.getMessage());
+            jr.setType("failed");
             return jr;
         }
         // 返回json格式包含状态码的成功信息
         JsonResult jr = new JsonResult();
         jr.setCode(0);
-        jr.setMsg("注册成功");
+        jr.setMessage("注册成功");
+        jr.setType("success");
+        JsonResult result = new JsonResult();
+        result.setCode(0);
+        result.setMessage("注册成功");
+        result.setType("success");
+        result.setResult(user);
+        jr.setResult(result);
         return jr;
     }
 
@@ -69,7 +80,7 @@ public class UserController {
         // 判断用户是否存在
         User existingUser = userMapper.queryUserById(id);
         if (existingUser == null) {
-            return new JsonResult(404, "该用户不存在", null);
+            return new JsonResult(404, null, "该用户不存在", "failed");
         }
         try{
             userMapper.deleteUser(id);
@@ -77,13 +88,15 @@ public class UserController {
             // 返回json格式包含状态码的错误信息
             JsonResult jr = new JsonResult();
             jr.setCode(410);
-            jr.setMsg("注销失败, "+e.getMessage());
+            jr.setMessage("注销失败, "+e.getMessage());
+            jr.setType("failed");
             return jr;
         }
         // 返回json格式包含状态码的成功信息
         JsonResult jr = new JsonResult();
         jr.setCode(0);
-        jr.setMsg("注销成功");
+        jr.setMessage("注销成功");
+        jr.setType("success");
         return jr;
     }
 
