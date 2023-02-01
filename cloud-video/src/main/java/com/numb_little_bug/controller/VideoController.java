@@ -4,14 +4,18 @@ import com.numb_little_bug.config.VideoConfig;
 import com.numb_little_bug.entity.Video;
 import com.numb_little_bug.mapper.VideoMapper;
 import com.numb_little_bug.utils.JsonResult;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class VideoController {
@@ -43,39 +47,42 @@ public class VideoController {
     }
 
     //上传视频文件
-    @PostMapping("/upload")
+    @PostMapping("/video")
     public JsonResult upload(MultipartFile uploadFile, HttpServletRequest request) {
-        /*
-        定义文件的存储路径,如下，是在linux和mac上定义的文件路径
-        /private/var/folders/8x/4zvnbqmj1w33cqmzrpygzbth0000gn/T/tomcat-docbase.5206733816001100271.8080/uploadFile
-        */
-        String realPath = request.getSession().getServletContext().getRealPath("/uploadFile/");
-        File dir = new File(realPath);
-        if (!dir.isDirectory()) {//文件目录不存在，就创建一个
-            dir.mkdirs();
-        }
         try {
-            String filename = uploadFile.getOriginalFilename();
-            //服务端保存的文件对象
-            File fileServer = new File(dir, filename);
-            System.out.println("file文件真实路径:" + fileServer.getAbsolutePath());
-            //2，实现上传
-            uploadFile.transferTo(fileServer);
-            String filePath = request.getScheme() + "://" +
-                    request.getServerName() + ":"
-                    + request.getServerPort()
-                    + "/uploadFile/" + filename;
-            //将文件信息保存到数据库
+            if (uploadFile.isEmpty()) {
+                return new JsonResult(500, null, "上传失败", "failed");
+            }
+            String originalFilename = uploadFile.getOriginalFilename();
+            // 文件后缀
+            String fileSuffix = originalFilename.substring(originalFilename.lastIndexOf("."));
+            // uuid 生成文件名
+            String uuid = String.valueOf(UUID.randomUUID());
+            // 根路径，在 resources/static/upload
+            String basePath = ResourceUtils.getURL("classpath:").getPath() + "static/upload/";
+            // 新的文件名，使用uuid生成文件名
+            String fileName = uuid + fileSuffix;
+            File fileExist = new File(basePath);
+            // 文件夹不存在，则新建
+            if (!fileExist.exists()) {
+                fileExist.mkdirs();
+            }
+            // 获取文件对象
+            File file = new File(basePath, fileName);
+            // 完成文件的上传
+            uploadFile.transferTo(file);
+            // HTTP访问路径
+            String httpPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/upload/" + fileName;
+            // 更新数据库
             Video video = new Video();
-            video.setName(filename);
-            video.setUrl(filePath);
+            video.setName(originalFilename);
+            video.setUrl(httpPath);
             videoMapper.addVideo(video);
-            return new JsonResult(200, filePath, "上传成功", "success");
-            //3，返回可供访问的网络路径
-        } catch (IOException e) {
+            return new JsonResult(200, httpPath, "上传成功", "success");
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return new JsonResult(500, null, "上传失败", "error");
+        return new JsonResult(500, null, "上传失败", "failed");
     }
 
     @DeleteMapping("/video/{id}")
