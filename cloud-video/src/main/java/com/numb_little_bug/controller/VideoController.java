@@ -48,9 +48,8 @@ public class VideoController {
 
     //上传视频文件
     @PostMapping("/video")
-    public JsonResult upload(MultipartFile file, HttpServletRequest request) {
-        System.out.println("uploadFile = " + file);
-        System.out.println("request = " + request);
+    public JsonResult upload(MultipartFile file,Integer siteId, HttpServletRequest request) {
+        System.out.println("siteId = " + siteId);
         try {
             if (file.isEmpty()) {
                 return new JsonResult(500, null, "上传失败", "failed");
@@ -79,6 +78,7 @@ public class VideoController {
             Video video = new Video();
             video.setName(originalFilename);
             video.setUrl(httpPath);
+            video.setSite_id(siteId);
             videoMapper.addVideo(video);
             return new JsonResult(200, httpPath, "上传成功", "success");
         } catch (Exception e) {

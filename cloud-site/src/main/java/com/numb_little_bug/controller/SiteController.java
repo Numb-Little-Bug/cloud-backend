@@ -56,6 +56,7 @@ public class SiteController {
         }
     }
 
+
     @GetMapping("/site/{id}")
     public JsonResult querySiteById(@PathVariable("id") Integer id) {
         Site site = siteMapper.querySiteById(id);
