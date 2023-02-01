@@ -48,12 +48,14 @@ public class VideoController {
 
     //上传视频文件
     @PostMapping("/video")
-    public JsonResult upload(MultipartFile uploadFile, HttpServletRequest request) {
+    public JsonResult upload(MultipartFile file, HttpServletRequest request) {
+        System.out.println("uploadFile = " + file);
+        System.out.println("request = " + request);
         try {
-            if (uploadFile.isEmpty()) {
+            if (file.isEmpty()) {
                 return new JsonResult(500, null, "上传失败", "failed");
             }
-            String originalFilename = uploadFile.getOriginalFilename();
+            String originalFilename = file.getOriginalFilename();
             // 文件后缀
             String fileSuffix = originalFilename.substring(originalFilename.lastIndexOf("."));
             // uuid 生成文件名
@@ -68,9 +70,9 @@ public class VideoController {
                 fileExist.mkdirs();
             }
             // 获取文件对象
-            File file = new File(basePath, fileName);
+            File fileObject = new File(basePath, fileName);
             // 完成文件的上传
-            uploadFile.transferTo(file);
+            file.transferTo(fileObject);
             // HTTP访问路径
             String httpPath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/upload/" + fileName;
             // 更新数据库
