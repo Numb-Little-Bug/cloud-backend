@@ -1,5 +1,7 @@
 package com.numb_little_bug.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.numb_little_bug.config.EncryptionWithKeyConfig;
 import com.numb_little_bug.entity.IDCard;
 import com.numb_little_bug.entity.User;
@@ -36,7 +38,21 @@ public class UserController {
     public JsonResult getUserById(@RequestHeader("Authorization") String token) {
         String tel = EncryptionWithKey.decrypt(token, EncryptionWithKeyConfig.KEY);
         System.out.println(tel);
-        return new JsonResult(0, userMapper.queryUserByTel(tel), "获取用户信息成功", "success");
+        User user = userMapper.queryUserByTel(tel);
+        if (user == null) {
+            return new JsonResult(400, null, "用户不存在", "failed");
+        }
+        JSONObject res = new JSONObject();
+        res.put("id", user.getId());
+        res.put("name", user.getName());
+        res.put("tel", user.getTel());
+        JSONObject role = new JSONObject();
+        role.put("roleName", user.getRole());
+        role.put("value", user.getRole());
+        ArrayList<JSONObject> roles = new ArrayList<>();
+        roles.add(role);
+        res.put("roles",roles);
+        return new JsonResult(0, res, "获取用户信息成功", "success");
     }
 
     @PostMapping(value="/user/{tel}")
@@ -46,7 +62,7 @@ public class UserController {
             return new JsonResult(400, null, "用户不存在", "failed");
         }
         if (user.getPassword().equals(userParam.getPassword())) {
-            // 根据手机号加密生成jwt
+            // 根据手机号加密生成jwt=token
             String jwt = EncryptionWithKey.encrypt(tel, EncryptionWithKeyConfig.KEY);
             System.out.println(jwt);
             Map<String, String> map = new HashMap<>();
