@@ -4,5 +4,5 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class VideoConfig {
-    public static final String uploadPath ="" ;
+    public static final String uploadPath ="src/main/resources/static/upload/";
 }
