@@ -62,7 +62,7 @@ public class UserController {
             return new JsonResult(400, null, "用户不存在", "failed");
         }
         if (user.getPassword().equals(userParam.getPassword())) {
-            // 根据手机号加密生成jwt
+            // 根据手机号加密生成jwt=token
             String jwt = EncryptionWithKey.encrypt(tel, EncryptionWithKeyConfig.KEY);
             System.out.println(jwt);
             Map<String, String> map = new HashMap<>();
