@@ -18,7 +18,7 @@ public class Operation {
 
     private String notice;
 
-    private String next;
+    private Integer stepNumber;
 
     private Integer ticketId;
 }
