@@ -12,4 +12,8 @@ public class Site {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private String name;
+
+    private String video1;
+
+    private String video2;
 }
