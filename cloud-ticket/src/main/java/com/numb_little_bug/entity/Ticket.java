@@ -16,7 +16,5 @@ public class Ticket {
 
     private String teller;
 
-    private String operator;
-
     private String notice;
 }
