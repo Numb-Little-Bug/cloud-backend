@@ -5,8 +5,11 @@ import com.numb_little_bug.mapper.SiteMapper;
 import com.numb_little_bug.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
+
 @RestController
 public class SiteController {
     private final SiteMapper siteMapper;
@@ -30,6 +33,8 @@ public class SiteController {
     public JsonResult deleteSite(@PathVariable("id") Integer id) {
         try{
             siteMapper.deleteSiteById(id);
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.delete("http://localhost:8085/video/" + id);
             return new JsonResult(0, null, "删除成功", "success");
         } catch (Exception e) {
             return new JsonResult(500, null, "删除失败", "error");
@@ -66,4 +71,18 @@ public class SiteController {
             return new JsonResult(500, null, "查询失败", "error");
         }
     }
+
+    @PostMapping("/video")
+    public JsonResult addVideo(@RequestParam("site_id") Integer id, @RequestBody Map<String, String> map) {
+        System.out.println(id);
+        System.out.println(map.get("video1"));
+        try{
+            siteMapper.addVideo(id, map.get("video1"));
+            return new JsonResult(0, null, "添加成功", "success");
+        } catch (Exception e) {
+            System.out.println(e);
+            return new JsonResult(500, null, "添加失败", "error");
+        }
+    }
+
 }

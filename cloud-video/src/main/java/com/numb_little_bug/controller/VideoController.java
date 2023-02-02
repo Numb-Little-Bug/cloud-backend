@@ -1,13 +1,18 @@
 package com.numb_little_bug.controller;
-
+import com.alibaba.fastjson.JSONObject;
+import org.springframework.http.HttpHeaders;
 import com.numb_little_bug.config.VideoConfig;
 import com.numb_little_bug.entity.Video;
 import com.numb_little_bug.mapper.VideoMapper;
 import com.numb_little_bug.utils.JsonResult;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -79,8 +85,22 @@ public class VideoController {
             video.setName(originalFilename);
             video.setUrl(httpPath);
             video.setSite_id(siteId);
-            videoMapper.addVideo(video);
-            return new JsonResult(200, httpPath, "上传成功", "success");
+            //调用provider的服务
+            RestTemplate restTemplate = new RestTemplate();
+            String url = "http://localhost:8082/video?site_id="+ siteId;
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("video1", httpPath);
+            HttpEntity<String> entity = new HttpEntity<>(jsonObject.toString(), headers);
+            String result = restTemplate.postForObject(url, entity ,String.class);
+            JSONObject jo = JSONObject.parseObject(result);
+            if(jo.get("code").equals(0)){
+                videoMapper.addVideo(video);
+                return new JsonResult(0, httpPath, "上传成功", "success");
+            }else{
+                return new JsonResult(500, null, "上传失败", "failed");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,7 +111,7 @@ public class VideoController {
     public JsonResult deleteVideo(@PathVariable("id") Integer id) {
         try{
             videoMapper.deleteVideoById(id);
-            return new JsonResult(200, null, "删除成功", "success");
+            return new JsonResult(0, null, "删除成功", "success");
         } catch (Exception e) {
             return new JsonResult(500, null, "删除失败", "error");
         }
