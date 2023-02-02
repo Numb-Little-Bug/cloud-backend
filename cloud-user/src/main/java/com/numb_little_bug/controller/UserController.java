@@ -29,6 +29,12 @@ public class UserController {
         this.userMapper = userMapper;
     }
 
+    /**
+     * 用户注册
+     * @param user
+     * @param bindingResult
+     * @return
+     */
     @GetMapping(value="/user/all")
     public List<User> getAllUser() {
         return userMapper.queryAllUser();
