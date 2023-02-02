@@ -16,8 +16,4 @@ public class VideoApplication {
         SpringApplication.run(VideoApplication.class, args);
     }
 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 }

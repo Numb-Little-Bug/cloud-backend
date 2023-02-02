@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-@EnableDiscoveryClient  // 开启服务注册与发现，可写可不写
+@EnableDiscoveryClient  // 开启服务注册与发现
 @EnableFeignClients
 public class SiteApplication {
     public static void main( String[] args )

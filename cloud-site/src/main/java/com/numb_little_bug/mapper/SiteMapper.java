@@ -2,6 +2,7 @@ package com.numb_little_bug.mapper;
 
 import com.numb_little_bug.entity.Site;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -25,4 +26,7 @@ public interface SiteMapper {
 
     @Select("update site set name = #{name} where id = #{id}")
     void updateSiteById(Site site);
+
+    @Select("update site set video1 = #{video1} where id = #{id}")
+    void addVideo(@Param("id")Integer id, @Param("video1")String video1);
 }
