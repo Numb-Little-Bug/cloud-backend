@@ -99,7 +99,7 @@
                     <!--指定生成文档的使用的配置文件-->
                     <configFile>${basedir}/src/main/resources/smart-doc.json</configFile>
                     <!--指定项目名称-->
-                    <projectName>现场侧</projectName>
+                    <projectName>视频</projectName>
                 </configuration>
                 <executions>
                     <execution>

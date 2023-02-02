@@ -30,10 +30,7 @@ public class UserController {
     }
 
     /**
-     * 用户注册
-     * @param user
-     * @param bindingResult
-     * @return
+     * 查询包含调度侧和现场侧的所有用户
      */
     @GetMapping(value="/user/all")
     public List<User> getAllUser() {
