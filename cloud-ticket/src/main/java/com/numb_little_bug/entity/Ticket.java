@@ -25,12 +25,12 @@ public class Ticket {
     /**
      * 操作票唱票人
      */
-    private String teller;
+    private Integer tellerId;
 
     /**
-     * 操作票执行人
+     * 操作票执行人id
      */
-    private String operator;
+    private Integer operatorId;
 
     /**
      * 操作票注意事项
@@ -55,7 +55,7 @@ public class Ticket {
     /**
      * 操作票发布人
      */
-    private String publisher;
+    private Integer publisherId;
 
     /**
      * 备注

@@ -12,6 +12,9 @@ public interface UserMapper {
     @Select("select * from user")
     List<User> queryAllUser();
 
+    @Select("select * from user where role = #{role}")
+    List<User> queryUserByRole(String role);
+
     // 根据id查询用户
     @Select("select * from user where id = #{id}")
     User queryUserById(Long id);

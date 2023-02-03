@@ -15,25 +15,25 @@ public interface TicketMapper {
     @Select("select * from ticket where name = #{name}")
     Ticket queryTicketByName(String name);
 
-    @Select("select * from ticket where teller = #{teller}")
-    Ticket[] queryTicketByTeller(String teller);
+    @Select("select * from ticket where tellerId = #{tellerId}")
+    Ticket[] queryTicketByTeller(Integer tellerId);
 
-    @Select("select * from ticket where operator = #{operator}")
-    Ticket[] queryTicketByOperator(String operator);
+    @Select("select * from ticket where operatorId = #{operatorId}")
+    Ticket[] queryTicketByOperator(Integer operatorId);
 
-    @Select("select * from ticket where publisher = #{publisher}")
-    Ticket[] queryTicketByPublisher(String publisher);
+    @Select("select * from ticket where publisherId = #{publisherId}")
+    Ticket[] queryTicketByPublisher(Integer publisherId);
 
     @Select("select * from ticket where status = #{status}")
     Ticket[] queryTicketByStatus(String status);
 
-    @Select("insert into ticket(name, teller, operator, notice, siteId, startTime, endTime, publisher, remark, status) values(#{name}, #{teller}, #{operator}, #{notice}, #{siteId}, #{startTime}, #{endTime}, #{publisher}, #{remark}, #{status})")
+    @Select("insert into ticket(name, tellerId, operatorId, notice, siteId, startTime, endTime, publisherId, remark, status) values(#{name}, #{tellerId}, #{operatorId}, #{notice}, #{siteId}, #{startTime}, #{endTime}, #{publisherId}, #{remark}, #{status})")
     void addTicket(Ticket ticket);
 
     @Select("delete from ticket where id = #{id}")
     void deleteTicket(Integer id);
 
-    @Select("update ticket set name = #{name}, teller = #{teller}, operator = #{operator}, notice = #{notice}, siteId = #{siteId}, startTime = #{startTime}, endTime = #{endTime}, publisher = #{publisher}, remark = #{remark}, status = #{status} where id = #{id}")
+    @Select("update ticket set name = #{name}, tellerId = #{tellerId}, operatorId = #{operatorId}, notice = #{notice}, siteId = #{siteId}, startTime = #{startTime}, endTime = #{endTime}, publisherId = #{publisherId}, remark = #{remark}, status = #{status} where id = #{id}")
     void updateTicket(Ticket ticket);
 
     @Select("select * from ticket")
@@ -45,11 +45,11 @@ public interface TicketMapper {
     @Select("update ticket set name = #{name} where id = #{id}")
     void updateTicketName(String name, Integer id);
 
-    @Select("update ticket set teller = #{teller} where id = #{id}")
-    void updateTicketTeller(String teller, Integer id);
+    @Select("update ticket set tellerId = #{teller} where id = #{id}")
+    void updateTicketTeller(Integer teller, Integer id);
 
-    @Select("update ticket set operator = #{operator} where id = #{id}")
-    void updateTicketOperator(String operator, Integer id);
+    @Select("update ticket set operatorId = #{operator} where id = #{id}")
+    void updateTicketOperator(Integer operator, Integer id);
 
     @Select("update ticket set notice = #{notice} where id = #{id}")
     void updateTicketNotice(String notice, Integer id);

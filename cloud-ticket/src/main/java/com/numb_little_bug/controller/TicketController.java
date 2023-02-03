@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+import static java.lang.Integer.parseInt;
+
 @RestController
 public class TicketController {
     private final TicketMapper ticketMapper;
@@ -73,7 +75,7 @@ public class TicketController {
      * @return JsonResult
      */
     @GetMapping("/ticket/teller/{teller}")
-    public JsonResult queryTicketByType(@PathVariable("teller") String teller) {
+    public JsonResult queryTicketByType(@PathVariable("teller") Integer teller) {
         Ticket[] tickets = ticketMapper.queryTicketByTeller(teller);
         if (tickets == null) {
             return new JsonResult(404, null, "查询结果为空", "failed");
@@ -86,7 +88,7 @@ public class TicketController {
      * @return JsonResult
      */
     @GetMapping("/ticket/operator/{operator}")
-    public JsonResult queryTicketByOperator(@PathVariable("operator") String operator) {
+    public JsonResult queryTicketByOperator(@PathVariable("operator") Integer operator) {
         Ticket[] tickets = ticketMapper.queryTicketByOperator(operator);
         if (tickets == null) {
             return new JsonResult(404, null, "查询结果为空", "failed");
@@ -99,7 +101,7 @@ public class TicketController {
      * @return JsonResult
      */
     @GetMapping("/ticket/publisher/{publisher}")
-    public JsonResult queryTicketByPublisher(@PathVariable("publisher") String publisher) {
+    public JsonResult queryTicketByPublisher(@PathVariable("publisher") Integer publisher) {
         Ticket[] tickets = ticketMapper.queryTicketByPublisher(publisher);
         if (tickets == null) {
             return new JsonResult(404, null, "查询结果为空", "failed");
@@ -224,7 +226,7 @@ public class TicketController {
             return new JsonResult(500, null, "更新失败，未查询到相关结果", "failed");
         }
         try {
-            ticketMapper.updateTicketTeller(map.get("teller"), ticket.getId());
+            ticketMapper.updateTicketTeller(parseInt(map.get("tellerId")), ticket.getId());
         } catch (Exception e) {
             return new JsonResult(500, null, "更新失败", "failed");
         }
@@ -243,7 +245,7 @@ public class TicketController {
             return new JsonResult(500, null, "更新失败，未查询到相关结果", "failed");
         }
         try {
-            ticketMapper.updateTicketOperator(map.get("operator"), ticket.getId());
+            ticketMapper.updateTicketOperator(parseInt(map.get("operatorId")), ticket.getId());
         } catch (Exception e) {
             return new JsonResult(500, null, "更新失败", "failed");
         }

@@ -37,6 +37,12 @@ public class UserController {
         return userMapper.queryAllUser();
     }
 
+
+    @GetMapping(value="/user/role/{role}")
+    public JsonResult getAllDispatchUser(@PathVariable("role") String role) {
+        return new JsonResult(0, userMapper.queryUserByRole(role), "查询成功", "success");
+    }
+
     @GetMapping(value="/user")
     public JsonResult getUserById(@RequestHeader("Authorization") String token) {
         String tel = EncryptionWithKey.decrypt(token, EncryptionWithKeyConfig.KEY);
