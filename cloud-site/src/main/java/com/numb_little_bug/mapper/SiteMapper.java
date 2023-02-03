@@ -32,4 +32,10 @@ public interface SiteMapper {
 
     @Select("update site set video2 = #{video2} where id = #{id}")
     void addVideo2(@Param("id")Integer id, @Param("video2")String video2);
+
+    @Select("update site set video1 = '' where id = #{siteId}")
+    void deleteVideo1BySiteId(Integer siteId);
+
+    @Select("update site set video2 = '' where id = #{siteId}")
+    void deleteVideo2BySiteId(Integer siteId);
 }
