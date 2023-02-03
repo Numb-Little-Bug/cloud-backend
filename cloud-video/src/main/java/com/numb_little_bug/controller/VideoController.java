@@ -55,7 +55,7 @@ public class VideoController {
 
     //上传视频文件
     @PostMapping("/video/{video_index}")
-    public JsonResult upload(@PathVariable("video_index") Integer video_index ,MultipartFile file,Integer siteId, HttpServletRequest request) {
+    public JsonResult upload(@PathVariable("video_index") Integer video_index, MultipartFile file, Integer siteId, HttpServletRequest request) {
         try {
             if (file.isEmpty()) {
                 return new JsonResult(500, null, "上传失败", "failed");
@@ -135,6 +135,23 @@ public class VideoController {
             return new JsonResult(200, video, "更新成功", "success");
         } catch(Exception e) {
             return new JsonResult(500, null, "更新失败", "error");
+        }
+    }
+
+    @DeleteMapping("/video")
+    public JsonResult deleteVideoByUrl(@RequestParam("url") String url) {
+        try{
+            videoMapper.deleteVideoByUrl(url);
+            // 删除文件
+            String basePath = ResourceUtils.getURL("classpath:").getPath() + "static/upload/";
+            String fileName = url.substring(url.lastIndexOf("/") + 1);
+            File file = new File(basePath, fileName);
+            if (file.exists()) {
+                file.delete();
+            }
+            return new JsonResult(0, null, "删除成功", "success");
+        } catch (Exception e) {
+            return new JsonResult(500, null, "删除失败", "error");
         }
     }
 }

@@ -29,4 +29,7 @@ public interface VideoMapper {
 
     @Select("update video set name = #{name}, url = #{url}, site_id = #{site_id} where id = #{id}")
     void updateVideoById(Video video);
+
+    @Select("delete from video where url = #{url}")
+    void deleteVideoByUrl(String url);
 }

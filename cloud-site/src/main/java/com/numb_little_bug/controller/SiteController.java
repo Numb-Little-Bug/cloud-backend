@@ -1,5 +1,6 @@
 package com.numb_little_bug.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.numb_little_bug.entity.Site;
 import com.numb_little_bug.mapper.SiteMapper;
 import com.numb_little_bug.utils.JsonResult;
@@ -9,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 public class SiteController {
@@ -25,7 +27,7 @@ public class SiteController {
             siteMapper.addSite(site);
             return new JsonResult(0, site, "添加成功", "success");
         } catch (Exception e) {
-            return new JsonResult(500, null, "添加失败", "error");
+            return new JsonResult(500, null, "添加失败", "failed");
         }
     }
 
@@ -37,7 +39,7 @@ public class SiteController {
             restTemplate.delete("http://localhost:8085/site/" + id);
             return new JsonResult(0, null, "删除成功", "success");
         } catch (Exception e) {
-            return new JsonResult(500, null, "删除失败", "error");
+            return new JsonResult(500, null, "删除失败", "failed");
         }
     }
 
@@ -47,7 +49,7 @@ public class SiteController {
             siteMapper.updateSiteById(site);
             return new JsonResult(0, site, "更新成功", "success");
         } catch(Exception e) {
-            return new JsonResult(500, null, "更新失败", "error");
+            return new JsonResult(500, null, "更新失败", "failed");
         }
     }
 
@@ -57,7 +59,7 @@ public class SiteController {
         if (sites.size() > 0) {
             return new JsonResult(0, sites, "查询成功", "success");
         } else {
-            return new JsonResult(500, null, "查询失败", "error");
+            return new JsonResult(500, null, "查询失败", "failed");
         }
     }
 
@@ -68,7 +70,7 @@ public class SiteController {
         if (site != null) {
             return new JsonResult(0, site, "查询成功", "success");
         } else {
-            return new JsonResult(500, null, "查询失败", "error");
+            return new JsonResult(500, null, "查询失败", "failed");
         }
     }
 
@@ -83,7 +85,30 @@ public class SiteController {
             return new JsonResult(0, null, "添加成功", "success");
         } catch (Exception e) {
             System.out.println(e);
-            return new JsonResult(500, null, "添加失败", "error");
+            return new JsonResult(500, null, "添加失败", "failed");
+        }
+    }
+
+    @DeleteMapping("site/{siteId}/video/{video}")
+    public JsonResult deleteVideoBySiteId(@PathVariable("siteId") Integer siteId, @PathVariable("video") String video) {
+        System.out.println(siteId);
+        System.out.println(video);
+        try{
+            String videoUrlValue;
+            if (video.equals("video1")) {
+                videoUrlValue = siteMapper.querySiteById(siteId).getVideo1();
+                siteMapper.deleteVideo1BySiteId(siteId);
+            } else {
+                videoUrlValue = siteMapper.querySiteById(siteId).getVideo2();
+                siteMapper.deleteVideo2BySiteId(siteId);
+            }
+            // 删除video表中的视频
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.delete("http://localhost:8085/video?url=" + videoUrlValue);
+            return new JsonResult(0, null, "删除成功", "success");
+        } catch (Exception e) {
+            System.out.println(e);
+            return new JsonResult(500, null, "删除失败", "failed");
         }
     }
 
