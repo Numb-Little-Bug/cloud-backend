@@ -34,7 +34,7 @@ public class SiteController {
         try{
             siteMapper.deleteSiteById(id);
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.delete("http://localhost:8085/video/" + id);
+            restTemplate.delete("http://localhost:8085/site/" + id);
             return new JsonResult(0, null, "删除成功", "success");
         } catch (Exception e) {
             return new JsonResult(500, null, "删除失败", "error");

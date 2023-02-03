@@ -1,5 +1,6 @@
 package com.numb_little_bug.controller;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.http.HttpHeaders;
 import com.numb_little_bug.config.VideoConfig;
 import com.numb_little_bug.entity.Video;
@@ -111,6 +112,16 @@ public class VideoController {
     public JsonResult deleteVideo(@PathVariable("id") Integer id) {
         try{
             videoMapper.deleteVideoById(id);
+            return new JsonResult(0, null, "删除成功", "success");
+        } catch (Exception e) {
+            return new JsonResult(500, null, "删除失败", "error");
+        }
+    }
+
+    @DeleteMapping("/site/{id}")
+    public JsonResult deleteSite(@PathVariable("id") Integer id) {
+        try{
+            videoMapper.deleteVideoBySiteId(id);
             return new JsonResult(0, null, "删除成功", "success");
         } catch (Exception e) {
             return new JsonResult(500, null, "删除失败", "error");

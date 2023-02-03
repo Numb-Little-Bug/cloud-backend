@@ -24,6 +24,9 @@ public interface VideoMapper {
     @Select("delete from video where id = #{id}")
     void deleteVideoById(Integer id);
 
+    @Select("delete from video where site_id = #{siteId}")
+    void deleteVideoBySiteId(Integer siteId);
+
     @Select("update video set name = #{name}, url = #{url}, site_id = #{site_id} where id = #{id}")
     void updateVideoById(Video video);
 }
