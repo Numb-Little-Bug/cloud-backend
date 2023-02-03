@@ -28,5 +28,8 @@ public interface SiteMapper {
     void updateSiteById(Site site);
 
     @Select("update site set video1 = #{video1} where id = #{id}")
-    void addVideo(@Param("id")Integer id, @Param("video1")String video1);
+    void addVideo1(@Param("id")Integer id, @Param("video1")String video1);
+
+    @Select("update site set video2 = #{video2} where id = #{id}")
+    void addVideo2(@Param("id")Integer id, @Param("video2")String video2);
 }

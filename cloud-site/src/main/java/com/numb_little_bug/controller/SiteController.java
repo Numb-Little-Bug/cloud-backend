@@ -73,11 +73,13 @@ public class SiteController {
     }
 
     @PostMapping("/video")
-    public JsonResult addVideo(@RequestParam("site_id") Integer id, @RequestBody Map<String, String> map) {
-        System.out.println(id);
-        System.out.println(map.get("video1"));
+    public JsonResult addVideo(@RequestParam("video_index") Integer video_index,@RequestParam("site_id") Integer id, @RequestBody Map<String, String> map) {
         try{
-            siteMapper.addVideo(id, map.get("video1"));
+            if(video_index == 1){
+                siteMapper.addVideo1(id, map.get("video1"));
+            } else if (video_index == 2){
+                siteMapper.addVideo2(id, map.get("video1"));
+            }
             return new JsonResult(0, null, "添加成功", "success");
         } catch (Exception e) {
             System.out.println(e);

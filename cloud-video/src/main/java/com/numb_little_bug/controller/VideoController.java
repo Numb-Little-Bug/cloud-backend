@@ -54,9 +54,8 @@ public class VideoController {
     }
 
     //上传视频文件
-    @PostMapping("/video")
-    public JsonResult upload(MultipartFile file,Integer siteId, HttpServletRequest request) {
-        System.out.println("siteId = " + siteId);
+    @PostMapping("/video/{video_index}")
+    public JsonResult upload(@PathVariable("video_index") Integer video_index ,MultipartFile file,Integer siteId, HttpServletRequest request) {
         try {
             if (file.isEmpty()) {
                 return new JsonResult(500, null, "上传失败", "failed");
@@ -88,7 +87,7 @@ public class VideoController {
             video.setSite_id(siteId);
             //调用provider的服务
             RestTemplate restTemplate = new RestTemplate();
-            String url = "http://localhost:8082/video?site_id="+ siteId;
+            String url = "http://localhost:8082/video?site_id="+ siteId + "&video_index=" + video_index;
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             JSONObject jsonObject = new JSONObject();
@@ -127,6 +126,7 @@ public class VideoController {
             return new JsonResult(500, null, "删除失败", "error");
         }
     }
+
 
     @PutMapping("/video")
     public JsonResult updateVideo(@RequestBody Video video) {
