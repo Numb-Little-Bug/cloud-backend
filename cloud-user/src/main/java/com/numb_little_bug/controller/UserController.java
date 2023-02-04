@@ -64,6 +64,15 @@ public class UserController {
         return new JsonResult(0, res, "获取用户信息成功", "success");
     }
 
+    @GetMapping(value="/user/{id}")
+    public JsonResult getUserById(@PathVariable("id") Integer id) {
+        User user = userMapper.queryUserById(id);
+        if (user == null) {
+            return new JsonResult(400, null, "用户不存在", "failed");
+        }
+        return new JsonResult(0, user, "查询成功", "success");
+    }
+
     @PostMapping(value="/user/{tel}")
     public JsonResult login(@PathVariable("tel") String tel, @RequestBody User userParam) {
         User user = userMapper.queryUserByTel(tel);
@@ -127,7 +136,7 @@ public class UserController {
 
     // 注销用户
     @DeleteMapping(value="/user/{id}")
-    public JsonResult deleteUser(@PathVariable("id") Long id) {
+    public JsonResult deleteUser(@PathVariable("id") Integer id) {
         // 判断用户是否存在
         User existingUser = userMapper.queryUserById(id);
         if (existingUser == null) {

@@ -17,7 +17,7 @@ public interface UserMapper {
 
     // 根据id查询用户
     @Select("select * from user where id = #{id}")
-    User queryUserById(Long id);
+    User queryUserById(Integer id);
 
     // 根据用户名查询用户
     @Select("select * from user where name = #{name}")
@@ -33,5 +33,5 @@ public interface UserMapper {
 
     // 根据id删除用户
     @Select("delete from user where id = #{id}")
-    void deleteUser(Long id);
+    void deleteUser(Integer id);
 }
