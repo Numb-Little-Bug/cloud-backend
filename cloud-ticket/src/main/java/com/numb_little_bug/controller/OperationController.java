@@ -86,4 +86,21 @@ public class OperationController {
         return new JsonResult(0, null, "删除成功", "success");
     }
 
+    /**
+     * 批量增加操作
+     * @param operations 操作列表
+     * @return JsonResult
+     */
+    @PostMapping("operation/batch")
+    public JsonResult addOperations(@RequestBody Operation[] operations) {
+        try {
+            for (Operation operation : operations){
+                operationMapper.addOperation(operation);
+            }
+        } catch (Exception e) {
+            return new JsonResult(500, null, "添加失败", "failed");
+        }
+        return new JsonResult(0, null, "添加成功", "success");
+    }
+
 }

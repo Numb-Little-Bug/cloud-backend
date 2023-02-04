@@ -9,6 +9,9 @@ public interface TicketMapper {
     @Select("select * from ticket where id = #{id}")
     Ticket queryTicketById(Integer id);
 
+    @Select("select * from ticket where name = #{name} and startTime = #{startTime} and endTime = #{endTime}")
+    Ticket queryTicketByNameAndTime(String name, String startTime, String endTime);
+
     @Select("select * from ticket where siteId = #{siteId}")
     Ticket[] queryTicketBySiteId(Integer siteId);
 
@@ -29,6 +32,7 @@ public interface TicketMapper {
 
     @Select("insert into ticket(name, tellerId, operatorId, notice, siteId, startTime, endTime, publisherId, remark, status) values(#{name}, #{tellerId}, #{operatorId}, #{notice}, #{siteId}, #{startTime}, #{endTime}, #{publisherId}, #{remark}, #{status})")
     void addTicket(Ticket ticket);
+
 
     @Select("delete from ticket where id = #{id}")
     void deleteTicket(Integer id);
@@ -62,5 +66,8 @@ public interface TicketMapper {
 
     @Select("update ticket set remark = #{remark} where id = #{id}")
     void updateTicketRemark(String remark, Integer id);
+
+
+
 
 }
