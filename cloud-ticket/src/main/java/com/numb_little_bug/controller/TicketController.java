@@ -134,12 +134,23 @@ public class TicketController {
      */
     @PostMapping("/ticket")
     public JsonResult addTicket(@RequestBody Ticket ticket) {
+        //查询是否存在同一时间同一名称的操作票
+        System.out.println("name:" +ticket.getName());
+        String ticketName = ticket.getName();
+        //System.out.println('n' + ticketName + 'n' + ticket.getStartTime().toString() + 'n' + ticket.getEndTime().toString() + 'n');
+        Ticket ticket1 = ticketMapper.queryTicketByName(ticketName);
+        if(ticket1 != null) {
+            return new JsonResult(500, null, "添加失败，已存在同一时间同一名称的操作票", "failed");
+        }
         try {
             ticketMapper.addTicket(ticket);
+            // 从数据库返回这一次操作的id
+            Integer id = ticketMapper.queryTicketByName(ticketName).getId();
+            return new JsonResult(0, id, "添加成功", "success");
         } catch (Exception e) {
+            System.out.println(e);
             return new JsonResult(500, null, "添加失败", "failed");
         }
-        return new JsonResult(0, null, "添加成功", "success");
     }
 
     /**
