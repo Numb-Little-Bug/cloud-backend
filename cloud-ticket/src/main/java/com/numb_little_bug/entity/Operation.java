@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 public class Operation {
@@ -39,4 +41,14 @@ public class Operation {
      * 本次操作所属操作票的id
      */
     private Integer ticketId;
+
+    /**
+     * 本次操作的执行状态: 0 未执行 1 执行中 2 已执行
+     */
+    private Integer status;
+
+    /**
+     * 本次操作完成的时间
+     */
+    private Date finishTime;
 }
