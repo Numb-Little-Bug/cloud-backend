@@ -43,12 +43,12 @@ public class Operation {
     private Integer ticketId;
 
     /**
-     * 本次操作的执行状态: 0 未执行 1 执行中 2 已执行
+     * 本次操作的执行状态: 0 未执行 1 执行中 2 已执行且操作正确 3 已执行但操作错误
      */
     private Integer status;
 
     /**
-     * 本次操作完成的时间
+     * 本次操作完成时间
      */
     private Date finishTime;
 }
