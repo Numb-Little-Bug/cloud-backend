@@ -34,6 +34,10 @@
             <artifactId>cloud-commons</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -80,5 +84,24 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <!-- smart-doc插件 -->
+            <plugin>
+                <groupId>com.github.shalousun</groupId>
+                <artifactId>smart-doc-maven-plugin</artifactId>
+                <version>2.6.3</version>
+                <configuration>
+                    <!--指定生成文档的使用的配置文件-->
+                    <configFile>${basedir}/src/main/resources/smart-doc.json</configFile>
+                    <!--指定项目名称-->
+                    <projectName>现场侧</projectName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>
