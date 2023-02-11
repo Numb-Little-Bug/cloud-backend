@@ -46,7 +46,6 @@ public class UserController {
     @GetMapping(value="/user")
     public JsonResult getUserById(@RequestHeader("Authorization") String token) {
         String tel = EncryptionWithKey.decrypt(token, EncryptionWithKeyConfig.KEY);
-        System.out.println(tel);
         User user = userMapper.queryUserByTel(tel);
         if (user == null) {
             return new JsonResult(400, null, "用户不存在", "failed");
@@ -61,6 +60,11 @@ public class UserController {
         ArrayList<JSONObject> roles = new ArrayList<>();
         roles.add(role);
         res.put("roles",roles);
+        if(user.getRole().equals("site")){
+            res.put("homePath", "/todolist");
+        } else {
+            res.put("homePath", "/site_side");
+        }
         return new JsonResult(0, res, "获取用户信息成功", "success");
     }
 
