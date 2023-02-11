@@ -84,7 +84,7 @@ public class TicketController {
     }
 
     /**
-     * 根据操作人姓名查询操作票
+     * 根据操作人ID查询操作票
      * @return JsonResult
      */
     @GetMapping("/ticket/operator/{operator}")
