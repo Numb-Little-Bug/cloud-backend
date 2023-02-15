@@ -1,4 +1,4 @@
-package com.numb_little_bug.mapper;
+package com.numb_little_bug.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

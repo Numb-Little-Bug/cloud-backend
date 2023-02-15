@@ -3,7 +3,7 @@ package com.numb_little_bug.controller;
 
 import com.numb_little_bug.entity.Operation;
 import com.numb_little_bug.mapper.OperationMapper;
-import com.numb_little_bug.mapper.JsonResult;
+import com.numb_little_bug.utils.JsonResult;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
