@@ -3,7 +3,7 @@ package com.numb_little_bug.controller;
 
 import com.numb_little_bug.entity.Ticket;
 import com.numb_little_bug.mapper.TicketMapper;
-import com.numb_little_bug.mapper.JsonResult;
+import com.numb_little_bug.utils.JsonResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
