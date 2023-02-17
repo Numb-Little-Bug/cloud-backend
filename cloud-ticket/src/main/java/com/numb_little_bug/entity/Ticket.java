@@ -70,5 +70,10 @@ public class Ticket {
      * 操作票状态: 0-已发布, 未执行, 1-正在执行, 2-已完成, 3-已取消
      */
     private Integer status;
+
+    /**
+     * 操作票对应的设备类型，用id表示
+     */
+    private Integer deviceTypeId;
 }
 

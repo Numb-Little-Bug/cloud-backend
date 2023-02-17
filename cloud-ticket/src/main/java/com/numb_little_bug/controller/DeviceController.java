@@ -31,6 +31,9 @@ public class DeviceController {
     @GetMapping("/device/{id}")
     public JsonResult queryDeviceById(@PathVariable("id") Integer id) {
         Device device = deviceMapper.queryDeviceById(id);
+        if (device == null) {
+            return new JsonResult(400, null, "设备不存在", "failed");
+        }
         ResultDevice res = new ResultDevice();
         res.setId(device.getId());
         res.setType(device.getType());
