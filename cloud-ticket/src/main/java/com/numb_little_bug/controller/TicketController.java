@@ -134,6 +134,7 @@ public class TicketController {
      */
     @PostMapping("/ticket")
     public JsonResult addTicket(@RequestBody Ticket ticket) {
+        System.out.println(ticket);
         //查询是否存在同一时间同一名称的操作票
         System.out.println("name:" +ticket.getName());
         String ticketName = ticket.getName();
