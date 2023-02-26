@@ -1,21 +1,17 @@
 package com.numb_little_bug.entity;
 
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
+import lombok.Setter;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 public class Item {
-    /**
-     * 项目id
-     */
     @TableId(type = IdType.AUTO)
     private Integer id;
 

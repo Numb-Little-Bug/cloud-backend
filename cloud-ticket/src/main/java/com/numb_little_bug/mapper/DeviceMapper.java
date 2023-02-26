@@ -12,7 +12,7 @@ public interface DeviceMapper {
     @Select("select * from device where name = #{name}")
     Device queryDeviceByName(String type);
 
-    //添加设备
+    // 添加设备
     @Select("insert into device(name, siteId) values(#{name}, #{siteId})")
     void addDevice(Device device);
 
