@@ -1,22 +1,33 @@
 package com.numb_little_bug.entity;
 
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.List;
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
-@Getter
-@Setter
-public class Device {
+@AllArgsConstructor
+public class Item {
+    /**
+     * 项目id
+     */
     @TableId(type = IdType.AUTO)
     private Integer id;
 
     private String name;
 
-    private Integer siteId;
+    private Integer line;
+
+    private Integer col;
+
+    private String status;
+
+    private String type;
+
+    private Integer deviceId;
 }
