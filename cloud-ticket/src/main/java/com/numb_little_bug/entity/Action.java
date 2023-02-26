@@ -1,20 +1,22 @@
 package com.numb_little_bug.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.List;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import com.baomidou.mybatisplus.annotation.IdType;
+
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-public class Device {
+public class Action {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    private String type;
+    private String action;
+
+    private String statue;
+
+    private Integer ItemId;
 }
