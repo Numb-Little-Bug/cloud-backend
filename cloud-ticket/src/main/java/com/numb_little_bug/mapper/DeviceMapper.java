@@ -9,11 +9,11 @@ public interface DeviceMapper {
     @Select("select * from device where id = #{id}")
     Device queryDeviceById(Integer id);
 
-    @Select("select * from device where type = #{type}")
-    Device queryDeviceByType(String type);
+    @Select("select * from device where name = #{name}")
+    Device queryDeviceByName(String type);
 
     //添加设备
-    @Select("insert into device(name) values(#{type})")
+    @Select("insert into device(name, siteId) values(#{name}, #{siteId})")
     void addDevice(Device device);
 
     @Select("select * from device")

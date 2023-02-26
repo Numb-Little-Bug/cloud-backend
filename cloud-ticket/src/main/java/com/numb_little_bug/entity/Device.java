@@ -16,5 +16,7 @@ public class Device {
     @TableId(type = IdType.AUTO)
     private Integer id;
 
-    private String type;
+    private String name;
+
+    private Integer siteId;
 }

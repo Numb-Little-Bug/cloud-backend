@@ -37,11 +37,11 @@ public class DeviceController {
     }
 
     @PostMapping("/device")
-    public JsonResult addDevice(@RequestBody Map<String, String> device) {
-        Device device1 = new Device();
-        device1.setType(device.get("type"));
-        deviceMapper.addDevice(device1);
-        return new JsonResult(0, null, "添加成功", "success");
+    public JsonResult addDevice(@RequestBody Device device) {
+        deviceMapper.addDevice(device);
+        queryAllDevice();
+        Integer id = deviceMapper.queryAllDevice()[deviceMapper.queryAllDevice().length - 1].getId();
+        return new JsonResult(0, id, "添加成功", "success");
     }
 
     @GetMapping("/device/{id}")
