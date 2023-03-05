@@ -23,7 +23,7 @@ public class DeviceController {
         this.ItemMapper = ItemMapper;
     }
 
-    @PostMapping("/item/{id}")
+    @PostMapping("device/item/{id}")
     public JsonResult addItem(@RequestBody Item[] items, @PathVariable("id") Integer id){
         System.out.println(JSONObject.toJSONString(items));
         for (Item item : items) {
