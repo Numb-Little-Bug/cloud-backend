@@ -98,6 +98,7 @@ public class OperationController {
                 operationMapper.addOperation(operation);
             }
         } catch (Exception e) {
+            System.out.println(e);
             return new JsonResult(500, null, "添加失败", "failed");
         }
         return new JsonResult(0, null, "添加成功", "success");

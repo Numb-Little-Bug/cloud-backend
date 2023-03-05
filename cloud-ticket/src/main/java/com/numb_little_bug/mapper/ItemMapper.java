@@ -13,4 +13,12 @@ public interface ItemMapper {
     // 从item表查找strap
     @Select("select * from item where type = #{type} and deviceId = #{deviceId}")
     Item[] queryComponentByTypeAndDeviceId(String type, Integer deviceId);
+
+    // 根据deviceId查找items
+    @Select("select * from item where deviceId = #{deviceId}")
+    Item[] queryItemByDeviceId(Integer deviceId);
+
+    // 根据id查找item
+    @Select("select * from item where id = #{id}")
+    Item queryItemById(Integer id);
 }
