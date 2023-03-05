@@ -22,6 +22,8 @@ public class Operation {
      */
     private String type;
 
+    private Integer itemId;
+
     /**
      * 操作描述
      */

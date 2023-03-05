@@ -145,4 +145,15 @@ public class DeviceController {
     public JsonResult queryAllDevice() {
         return new JsonResult(0, deviceMapper.queryAllDevice(), "查询成功", "success");
     }
+
+    @GetMapping("/item/device/{id}")
+    public JsonResult queryItemByDeviceId(@PathVariable("id") Integer id) {
+        return new JsonResult(0, ItemMapper.queryItemByDeviceId(id), "查询成功", "success");
+    }
+
+    @GetMapping("/item/item/{id}")
+    public JsonResult queryItemNameByDeviceId(@PathVariable("id") Integer id) {
+        Item item = ItemMapper.queryItemById(id);
+        return new JsonResult(0, item, "查询成功", "success");
+    }
 }
