@@ -30,14 +30,14 @@ public interface TicketMapper {
     @Select("select * from ticket where status = #{status}")
     Ticket[] queryTicketByStatus(String status);
 
-    @Select("insert into ticket(name, tellerId, operatorId, notice, siteId, startTime, endTime, publisherId, remark, status) values(#{name}, #{tellerId}, #{operatorId}, #{notice}, #{siteId}, #{startTime}, #{endTime}, #{publisherId}, #{remark}, #{status})")
+    @Select("insert into ticket(name, tellerId, operatorId, notice, siteId, startTime, endTime, publisherId, remark, status, deviceTypeId) values(#{name}, #{tellerId}, #{operatorId}, #{notice}, #{siteId}, #{startTime}, #{endTime}, #{publisherId}, #{remark}, #{status}, #{deviceTypeId})")
     void addTicket(Ticket ticket);
 
 
     @Select("delete from ticket where id = #{id}")
     void deleteTicket(Integer id);
 
-    @Select("update ticket set name = #{name}, tellerId = #{tellerId}, operatorId = #{operatorId}, notice = #{notice}, siteId = #{siteId}, startTime = #{startTime}, endTime = #{endTime}, publisherId = #{publisherId}, remark = #{remark}, status = #{status} where id = #{id}")
+    @Select("update ticket set name = #{name}, tellerId = #{tellerId}, operatorId = #{operatorId}, notice = #{notice}, siteId = #{siteId}, startTime = #{startTime}, endTime = #{endTime}, publisherId = #{publisherId}, remark = #{remark}, status = #{status}, deviceTypeId = #{deviceTypeId} where id = #{id}")
     void updateTicket(Ticket ticket);
 
     @Select("select * from ticket")
@@ -45,6 +45,9 @@ public interface TicketMapper {
 
     @Select("update ticket set status = #{status} where id = #{id}")
     void updateTicketStatus(String status, Integer id);
+
+    @Select("update ticket set deviceTypeId = #{deviceTypeId} where id = #{id}")
+    void updateTicketDeviceTypeId(Integer deviceTypeId, Integer id);
 
     @Select("update ticket set name = #{name} where id = #{id}")
     void updateTicketName(String name, Integer id);
@@ -66,8 +69,4 @@ public interface TicketMapper {
 
     @Select("update ticket set remark = #{remark} where id = #{id}")
     void updateTicketRemark(String remark, Integer id);
-
-
-
-
 }

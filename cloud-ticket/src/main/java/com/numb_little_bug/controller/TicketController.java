@@ -3,7 +3,7 @@ package com.numb_little_bug.controller;
 
 import com.numb_little_bug.entity.Ticket;
 import com.numb_little_bug.mapper.TicketMapper;
-import com.numb_little_bug.mapper.JsonResult;
+import com.numb_little_bug.utils.JsonResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -134,6 +134,7 @@ public class TicketController {
      */
     @PostMapping("/ticket")
     public JsonResult addTicket(@RequestBody Ticket ticket) {
+        System.out.println(ticket);
         //查询是否存在同一时间同一名称的操作票
         System.out.println("name:" +ticket.getName());
         String ticketName = ticket.getName();
